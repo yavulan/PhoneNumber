@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 let PhoneNumber = (function() {
     const _phoneNumber = Symbol( 'phoneNumber' );
@@ -139,5 +139,4 @@ let PhoneNumber = (function() {
 
     return PhoneNumber;
 }());
-
 
