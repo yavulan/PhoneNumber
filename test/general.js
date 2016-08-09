@@ -18,3 +18,13 @@ describe( 'Phone number parsing', () => {
     it( 'should not parse invalid phone numbers (return undefined)', () =>
         expect(PhoneNumber.parse( '380001234567' )).to.be.undefined );
 });
+
+describe( 'Setting default country', () => {
+    it( 'should throw an Err if country is invalid or not supported', () =>
+        expect( ()=> PhoneNumber.setDefaultCountry('whaat') ).to.throw( ReferenceError, /is not supported/ ) );
+
+    it( 'should set supported country', () => {
+        PhoneNumber.setDefaultCountry( 'UA' );
+        PhoneNumber.defaultCountry.should.equal( 'UA' );
+    });
+});
