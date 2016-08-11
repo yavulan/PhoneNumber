@@ -28,3 +28,30 @@ describe( 'Setting default country', () => {
         PhoneNumber.defaultCountry.should.equal( 'UA' );
     });
 });
+
+describe( 'Getting operators', () => {
+    it( 'should return kyivstar', () => {
+        let ph = new PhoneNumber( '0671234567' );
+        ph.operator.should.equal( 'kyivstar' );
+    });
+
+    it( 'should return vodafone', () => {
+        let ph = new PhoneNumber( '0991234567' );
+        ph.operator.should.equal( 'vodafone' );
+    });
+
+    it( 'should return lifecell', () => {
+        let ph = new PhoneNumber( '0731234567' );
+        ph.operator.should.equal( 'lifecell' );
+    });
+
+    it( 'should return intertelecom', () => {
+        let ph = new PhoneNumber( '0941234567' );
+        ph.operator.should.equal( 'intertelecom' );
+    });
+
+    it( 'should return 3mob', () => {
+        let ph = new PhoneNumber( '0911234567' );
+        ph.operator.should.equal( '3mob' );
+    });
+});
