@@ -33,6 +33,9 @@ var PhoneNumber = function () {
             // cache input number in *this[_phoneNumber]* for further use
             this[_phoneNumber] = number = number.replace(/\D+/g, '');
 
+            // case-insensitive country detection
+            country && (country = country.toUpperCase());
+
             if (country && !!~Object.keys(PhoneNumber.countries).indexOf(country)) {
                 this[_country] = country;
             } else {
@@ -98,8 +101,11 @@ var PhoneNumber = function () {
         }], [{
             key: 'setDefaultCountry',
             value: function setDefaultCountry(country) {
+                // case-insensitive country detection
+                country && (country = country.toUpperCase());
+
                 if (!!~Object.keys(PhoneNumber.countries).indexOf(country)) {
-                    PhoneNumber.defaultCountry = country;
+                    return PhoneNumber.defaultCountry = country;
                 } else {
                     throw new ReferenceError('Country ' + country + ' is not supported.');
                 }

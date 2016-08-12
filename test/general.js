@@ -27,6 +27,11 @@ describe( 'Setting default country', () => {
         PhoneNumber.setDefaultCountry( 'UA' );
         PhoneNumber.defaultCountry.should.equal( 'UA' );
     });
+
+    it( 'should set country properly despite the case', () =>
+        expect( ()=> PhoneNumber.setDefaultCountry('uA').should.equal( 'UA' ) )
+    );
+
 });
 
 describe( 'Getting operators', () => {
