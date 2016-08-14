@@ -29,7 +29,7 @@ describe( 'Setting default country', () => {
     });
 
     it( 'should set country properly despite the case', () =>
-        expect( ()=> PhoneNumber.setDefaultCountry('uA').should.equal( 'UA' ) )
+        expect( PhoneNumber.setDefaultCountry('uA') ).to.equal( 'UA' )
     );
 
 });
