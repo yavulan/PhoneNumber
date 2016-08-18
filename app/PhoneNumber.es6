@@ -69,13 +69,30 @@ let PhoneNumber = (function() {
                 throw new ReferenceError( `Country ${country} is not supported.` );
             }
         };
-        static parse( number, country ) {
-            return new PhoneNumber( number, country ).toString();
+        static parse( number, country, format ) {
+            return new PhoneNumber( number, country ).toString( format );
         };
-        toString() {
-            return ( this[_number] && this[_area] ) ?
-                    `${this[_prefix]}${this[_area]}${this[_number]}` :
-                        this[_number];
+        toString( format ) {
+            if( this[_number] && this[_area] ){
+                // if no format provided, lets use default country format
+                format || ( format = PhoneNumber.countries[this[_country]].format );
+                let number = this[_area] + this[_number];
+
+                for( let i = 1, j = 1; i <= format.length; i++ ) {
+                    // if a number at current position in *format*
+                    if ( !Number.isNaN(parseInt( format[format.length-i])) ){
+                        // replaceAt from *number* at *len-1-j*
+                        format = format.slice( 0, -i ) + number[number.length-j] + format.substr( format.length-i+1 );
+                        j++;
+
+                        // all available digits in *number* already has been assigned to *format*, so stop this madness
+                        if ( j > number.length ) break;
+                    }
+                }
+                return format;
+
+            // if string passed to PhoneNumber is invalid, *this[_number]* is undefined
+            } else return this[_number];
         };
         get number() {
             return this[_number];
@@ -104,7 +121,7 @@ let PhoneNumber = (function() {
     PhoneNumber.countries = {
         UA: {
             prefix: '380',
-            defaultFormat: '+38 000 000 00 00',
+            format: '+380000000000',
             areas: [
                 {
                     name: 'kyivstar',

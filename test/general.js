@@ -13,7 +13,7 @@ const rewire = require( 'rewire' );
 
 describe( 'Phone number parsing', () => {
     it( 'should parse valid phone numbers', () =>
-        PhoneNumber.parse( '+380501234567' ).should.equal( '380501234567' ) );
+        PhoneNumber.parse( '+380501234567' ).should.equal( '+380501234567' ) );
 
     it( 'should not parse invalid phone numbers (return undefined)', () =>
         expect(PhoneNumber.parse( '380001234567' )).to.be.undefined );
@@ -59,4 +59,22 @@ describe( 'Getting operators', () => {
         let ph = new PhoneNumber( '0911234567' );
         ph.operator.should.equal( '3mob' );
     });
+});
+
+describe( 'Phone number formatting', () => {
+    it( 'should use default formatting by default', () =>
+        PhoneNumber.parse( '0501234567' ).should.equal( '+380501234567' )
+    );
+
+    it( 'should properly fit to formatting with spaces', () =>
+            PhoneNumber.parse( '0501234567', '', '+38 000 000 00 00' ).should.equal( '+38 050 123 45 67' )
+    );
+
+    it( 'should properly fit to formatting with dashes', () =>
+            PhoneNumber.parse( '0501234567', '', '+38 000 000-00-00' ).should.equal( '+38 050 123-45-67' )
+    );
+
+    it( 'should properly fit to formatting without area code', () =>
+            PhoneNumber.parse( '0501234567', '', '000 -> 00 -> 00' ).should.equal( '123 -> 45 -> 67' )
+    );
 });
